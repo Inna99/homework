@@ -27,7 +27,3 @@ def check_fibonacci(data: Sequence[int]) -> bool:
         return True
     else:
         return False
-
-
-
-# print(check_fibonacci([0, 1, 1, 2]))
