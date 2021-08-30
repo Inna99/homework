@@ -12,6 +12,6 @@ from typing import List
 def find_maximal_subarray_sum(nums: List[int], k: int) -> int:
     mx = sum(nums[:3])
     for i in range(1, len(nums) - 2):
-        if sum(nums[i:i+3]) > mx:
-            mx = sum(nums[i:i+3])
+        if sum(nums[i : i + 3]) > mx:
+            mx = sum(nums[i : i + 3])
     return mx
