@@ -13,7 +13,6 @@ def check_sum_of_four(a: List[int], b: List[int], c: List[int], d: List[int]) ->
     for i in range(n):
         for j in range(n):
             for k in range(n):
-                for l in range(n):  # noqa: E741
-                    if a[i] + b[j] + c[k] + d[l] == 0:
-                        counter += 1
+                abc = a[i] + b[j] + c[k]
+                counter += d.count(abc * (-1))
     return counter
