@@ -2,13 +2,9 @@ import unittest.mock
 from os import path
 from unittest.mock import patch
 
-from homework2.task1 import (
-    count_non_ascii_chars,
-    count_punctuation_chars,
-    get_longest_diverse_words,
-    get_most_common_non_ascii_char,
-    get_rarest_char,
-)
+from homework2.task1 import (count_non_ascii_chars, count_punctuation_chars,
+                             get_longest_diverse_words,
+                             get_most_common_non_ascii_char, get_rarest_char)
 
 current_dir = path.dirname(__file__)
 filename = path.join(current_dir, "test_data.txt")
