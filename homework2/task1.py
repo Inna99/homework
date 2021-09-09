@@ -6,7 +6,7 @@ Given a file containing text. Complete using only default collections:
     4) Count every non ascii char
     5) Find most common non ascii char for document
 """
-from collections import Counter
+from collections import Counter, defaultdict
 from string import printable, punctuation
 from typing import List
 
@@ -15,15 +15,28 @@ def get_longest_diverse_words(file_path: str) -> List[str]:
     """Find 10 longest words consisting from largest amount of unique symbols"""
     with open(file_path) as fi:
         text = fi.read()
-    punctuation_chars = dict.fromkeys(list(punctuation), "")
-    my_table = " ".maketrans(punctuation_chars)  # type: ignore
-    text = text.translate(my_table)
-    list_x = text.split()
-    word_count = list()
-    for word in list_x:
-        word_count.append((len(set(word)), word))
-    word_count.sort(reverse=True)
-    answer = [i[1] for i in word_count[:10]]
+    translate_table = text.maketrans("", "", punctuation)  # type: ignore
+    text = text.translate(translate_table)
+    list_words = text.split()
+    sort_by_frequency = defaultdict(list)
+    for word in list_words:
+        amount = len(set(word))
+        sort_by_frequency[amount].append(word)
+    max_amount = max(sort_by_frequency.keys())
+    answer = []
+    count = 10
+    while count > 0:
+        len_ = len(sort_by_frequency[max_amount])
+        if len_ <= count and len != 0:
+            answer.extend(sort_by_frequency[max_amount])
+            count -= len_
+            max_amount -= 1
+        else:
+            sorted_on_len = sorted(
+                sort_by_frequency[max_amount], reverse=True, key=lambda x: len(x)
+            )
+            answer.extend(sorted_on_len[:count])
+            break
     return answer
 
 

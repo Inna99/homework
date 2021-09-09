@@ -10,10 +10,23 @@ val_1 = cache_func(*some)
 val_2 = cache_func(*some)
 assert val_1 is val_2
 """
-from functools import lru_cache
+import functools
 from typing import Callable
 
+# @lru_cache
+# def cache(func: Callable) -> Callable:
+#     return lru_cache(func)
 
-@lru_cache
+
 def cache(func: Callable) -> Callable:
-    return func
+    """Кэш функция"""
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        cache_key = args + tuple(kwargs.items())
+        if cache_key not in wrapper.cache:
+            wrapper.cache[cache_key] = func(*args, **kwargs)
+        return wrapper.cache[cache_key]
+
+    wrapper.cache = dict()  # type: ignore
+    return wrapper

@@ -11,16 +11,20 @@ assert combinations([1, 2], [3, 4]) == [
     [2, 4],
 ]
 """
-from functools import reduce
+import string
+from itertools import product
 from typing import Any, List
 
 
 def combinations(*args: List[Any]) -> List[List]:
     lens_lists = [len(args[i]) for i in range(len(args))]
-    new_len = reduce(lambda x, y: x * y, lens_lists)
-    list_lists: List[List] = [[]] * new_len
-    print(list_lists)
-    for i, lst in enumerate(args):
-        for j, elem in enumerate(lst):
-            list_lists[i].append(elem)
-    return []
+    list_lists = []
+    for comb in product(string.digits[: max(lens_lists)], repeat=len(args)):
+        x = []
+        try:
+            for index, elem in enumerate(comb):
+                x.append(args[index][int(elem)])
+        except IndexError:
+            continue
+        list_lists.append(x)
+    return list_lists

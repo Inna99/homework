@@ -8,21 +8,18 @@ assert = custom_range(string.ascii_lowercase, 'g') == ['a', 'b', 'c', 'd', 'e', 
 assert = custom_range(string.ascii_lowercase, 'g', 'p') == ['g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o']
 assert = custom_range(string.ascii_lowercase, 'p', 'g', -2) == ['p', 'n', 'l', 'j', 'h']
 """
-import string
 from typing import List
 
 
 def custom_range(collection, *args) -> List:
+    defaults = [collection[0], collection[-1], 1]
     if len(args) == 3:
-        start, stop, step = args
+        defaults = list(args)
     elif len(args) == 2:
-        start, stop = args
-        step = 1
+        defaults[0], defaults[1] = args[0], args[1]
     else:
-        start = collection[0]
-        stop = args[0]
-        step = 1
-    print(start, stop, step)
+        defaults[1] = args[0]
+    start, stop, step = defaults
     answer = []
     if step < 1:
         collection = collection[::-1]
@@ -35,6 +32,3 @@ def custom_range(collection, *args) -> List:
             else:
                 break
     return answer
-
-
-print(custom_range(string.ascii_lowercase, "g"))
