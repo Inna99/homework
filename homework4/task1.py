@@ -25,4 +25,13 @@ You will learn:
 
 
 def read_magic_number(path: str) -> bool:
-    ...
+    with open(file=path, encoding="unicode-escape", mode="r") as fi:
+        num = fi.readline()
+        try:
+            n = int(num)
+            if 1 <= n < 3:
+                return True
+            else:
+                return False
+        except Exception:
+            raise ValueError
