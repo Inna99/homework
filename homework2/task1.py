@@ -13,8 +13,9 @@ from typing import List
 
 def get_longest_diverse_words(file_path: str) -> List[str]:
     """Find 10 longest words consisting from largest amount of unique symbols"""
-    with open(file_path) as fi:
+    with open(file_path, encoding="unicode_escape") as fi:
         text = fi.read()
+    print(text)
     translate_table = text.maketrans("", "", punctuation)  # type: ignore
     text = text.translate(translate_table)
     list_words = text.split()
@@ -42,7 +43,7 @@ def get_longest_diverse_words(file_path: str) -> List[str]:
 
 def get_rarest_char(file_path: str) -> str:
     """Find rarest symbol for document"""
-    with open(file_path) as f:
+    with open(file_path, encoding="unicode_escape") as f:
         text = f.read()
     counter = Counter(text)
     result = []
@@ -57,7 +58,7 @@ def get_rarest_char(file_path: str) -> str:
 def count_punctuation_chars(file_path: str) -> int:
     """Count every punctuation char"""
     punctuation_chars = Counter(dict.fromkeys(list(punctuation), 1000000))  # type: ignore
-    with open(file_path) as fi:
+    with open(file_path, encoding="unicode_escape") as fi:
         text = fi.read()
     counter = Counter(text)
     return sum((punctuation_chars & counter).values())
@@ -65,19 +66,19 @@ def count_punctuation_chars(file_path: str) -> int:
 
 def count_non_ascii_chars(file_path: str) -> int:
     """Count every non ascii char"""
-    with open(file_path) as fi:
+    with open(file_path, encoding="unicode_escape") as fi:
         text = fi.read()
     counter = Counter(text)
     max_common = counter.most_common()[0][1]
-    ascii_chars = Counter(dict.fromkeys(list(printable), max_common))  # переделать
+    ascii_chars = Counter(dict.fromkeys(list(printable), max_common))
     return sum((counter - ascii_chars).values())
 
 
 def get_most_common_non_ascii_char(file_path: str) -> str:
     """Find most common non ascii char for document"""
-    with open(file_path) as fi:
+    with open(file_path, encoding="unicode_escape") as fi:
         text = fi.read()
     counter = Counter(text)
     max_common = counter.most_common()[0][1]
-    ascii_chars = Counter(dict.fromkeys(list(printable), max_common))  # переделать
+    ascii_chars = Counter(dict.fromkeys(list(printable), max_common))
     return (counter - ascii_chars).most_common()[0][0]

@@ -27,5 +27,6 @@ def cache(func: Callable) -> Callable:
         if cache_key not in wrapper.cache:
             wrapper.cache[cache_key] = func(*args, **kwargs)
         return wrapper.cache[cache_key]
+
     wrapper.cache = dict()  # type: ignore
     return wrapper
