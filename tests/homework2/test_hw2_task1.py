@@ -15,21 +15,21 @@ data = "аабббббб аабббаабаа абвб вбвба бвавбв �
 def test_get_longest_diverse_words():
     """Checking find 10 longest words consisting from largest amount of unique symbols"""
     assert get_longest_diverse_words(filename) == [
-        "requestsgethttpsjsonplaceholdertypicodecomposts",
-        "jsonplaceholder",
-        "formatselfname",
-        "следующим",
-        "инициировать",
+        "Gefährdung",
+        "Inzwischen",
         "equivalent",
-        "equivalent",
-        "выглядит",
-        "определяет",
-        "Запустив",
+        "à®\x87à®¨à¯\x8dà®¤à®¿à®¯à®¾",
+        "â\x80\x98Tamilâ\x80\x99",
+        "Großväter",
+        "handelt",
+        "Kernfrage",
+        "verändert",
+        "bedeutend",
     ]
 
 
 def test_function_that_opens_file_mock():
-    """ """
+    """Check longest diverse words"""
     mock_on = unittest.mock.mock_open(read_data=data)
     with patch("builtins.open", mock_on):
         result = get_longest_diverse_words(path.join(current_dir, "test_mock.txt"))
@@ -49,19 +49,26 @@ def test_function_that_opens_file_mock():
 
 def test_get_rarest_char():
     """Checking find rarest symbol for document"""
-    assert get_rarest_char(filename) == "шгющ<{}>ЭЗСъभारत网络NEקוםOMHஇந்தியா‘’k"
+    dat = (
+        "Es handelt sich um eine Kernfrage unserer Zeit, das hei\u00dft, "
+        "um eine Frage, die auf alle F\u00e4lle Gef\u00e4hrdung mit sich bringt."
+    )
+    mock_on = unittest.mock.mock_open(read_data=dat)
+    with patch("builtins.open", mock_on):
+        result = get_rarest_char(path.join(current_dir, "test_mock.txt"))
+        assert result == "EKZßGb."
 
 
 def test_count_punctuation_chars():
     """Checking count every punctuation char"""
-    assert count_punctuation_chars(filename) == 69
+    assert count_punctuation_chars(filename) == 19
 
 
 def test_count_non_ascii_chars():
     """Checking count every non ascii char"""
-    assert count_non_ascii_chars(filename) == 151
+    assert count_non_ascii_chars(filename) == 42
 
 
 def test_get_most_common_non_ascii_char():
     """Checking find most common non ascii char for document"""
-    assert get_most_common_non_ascii_char(filename) == "о"
+    assert get_most_common_non_ascii_char(filename) == "à"
