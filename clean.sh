@@ -7,6 +7,7 @@ echo STARTING MYPY
 mypy .
 echo STARTING FLAKE8
 flake8 .
+flake8 tests
 echo STARTING CHECK ISORT
 isort --check .
 echo STARTING ISORT

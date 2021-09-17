@@ -13,8 +13,19 @@ Definition of done:
 * https://en.wikipedia.org/wiki/Fizz_buzz
 ** https://www.youtube.com/watch?v=NSzsYWckGd4
 """
-from typing import List, Generator
+from typing import Generator
 
 
-def fizzbuzz(n: int) -> Generator[str]:
-    pass
+def fizzbuzz(n: int) -> Generator:
+    """
+    Return the generator object
+    """
+    tmp = 1
+    while tmp <= n:
+        if tmp % 5 == 0:
+            yield "buzz"
+        elif tmp % 3 == 0:
+            yield "fizz"
+        else:
+            yield str(tmp)
+        tmp += 1

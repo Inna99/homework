@@ -18,16 +18,21 @@ from typing import List
 
 
 def fizzbuzz(n: int) -> List[str]:
-    def gen_fizzbuzz(n):
-        while n > 0:
-            if n % 5 == 0:
-                yield "buzz"
-            elif n % 3 == 0:
-                yield "fizz"
-            else:
-                yield n
-            n -= 1
-    return list(gen_fizzbuzz(n))[::-1]
+    """
+    Given two integers, return the sum.
 
+    :param n: int
+    :return: list
 
-print(fizzbuzz("5"))
+    >>> fizzbuzz(5)
+    ["1", "2", "fizz", "4", "buzz"]
+    """
+    answer = []
+    for i in range(1, n + 1):
+        if i % 5 == 0:
+            answer.append("buzz")
+        elif i % 3 == 0:
+            answer.append("fizz")
+        else:
+            answer.append(str(i))
+    return answer
