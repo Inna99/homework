@@ -15,8 +15,9 @@ class Filter:
         ]
 
 # example of usage:
-# positive_even = Filter(lamba a: a % 2 == 0, lambda a: a > 0, lambda a: isinstance(int, a)))
-# positive_even.apply(range(100)) should return only even numbers from 0 to 99
+positive_even = Filter((lambda a: a % 2 == 0, lambda a: a > 0, lambda a: isinstance(a, int)))
+print(type(positive_even))
+print(positive_even.apply(range(100)))  #should return only even numbers from 0 to 99
 
 
 def make_filter(**keywords):
@@ -25,13 +26,13 @@ def make_filter(**keywords):
     """
     filter_funcs = []
     for key, value in keywords.items():
-        def keyword_filter_func(value):
-            return value[key] == value
+        def keyword_filter_func(data):  # def keyword_filter_func(value):
+            return data[key] == value  # return value[key] == value
         filter_funcs.append(keyword_filter_func)
     return Filter(filter_funcs)
 
 
-sample_data  =  [
+sample_data = [
      {
          "name": "Bill",
          "last_name": "Gilbert",
@@ -46,6 +47,7 @@ sample_data  =  [
      }
 ]
 
-# make_filter(name='polly', type='bird').apply(sample_data) should return only second entry from the list
+print(make_filter(name='polly', type='bird').apply(sample_data))  # should return only second entry from the list
+print(type(make_filter(name='polly', type='bird')))
 
 # There are multiple bugs in this code. Find them all and write tests for faulty cases.

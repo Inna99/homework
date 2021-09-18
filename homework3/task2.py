@@ -15,5 +15,5 @@ def slow_calculate(value):
 def sum_slow_calculate_from_0_to_500():
     """Summa 500 calls slow_calculate"""
     with Pool(32) as pool:
-        answer = sum(pool.map(slow_calculate, list(range(500))))
+        answer = sum(pool.map(slow_calculate, list(range(5))))
     return answer

@@ -14,8 +14,7 @@ Write a function that detects if a number is Armstrong number in functionaly sty
 
 
 def is_armstrong(number: int) -> bool:
-    ...
-
-
-assert is_armstrong(153) is True, 'Is Armstrong number'
-assert is_armstrong(10) is False, 'Is not Armstrong number'
+    """detects if a number is Armstrong number"""
+    lenght = len(str(number))
+    summa = sum(map(lambda x: int(x) ** lenght, list(str(number))))
+    return summa is number
