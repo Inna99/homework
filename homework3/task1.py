@@ -20,37 +20,28 @@
 # >>> f()
 # ? 2
 # '2'
-
 import functools
-from typing import Callable
+from typing import Callable, Dict
 
 
 def cache(times=5):
     def one_more_func(func: Callable) -> Callable:
         """Hash function with the parameter"""
+
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            # print(wrapper.cache)
             cache_key = args + tuple(kwargs.items())
-            if cache_key not in wrapper.cache:
-                wrapper.cache[cache_key] = [func(*args, **kwargs), times]
-                print('?')
-                return wrapper.cache[cache_key]
+            if cache_key not in wrapper_cache:
+                wrapper_cache[cache_key] = [func(*args, **kwargs), times]
+                print("?")
+                return wrapper_cache[cache_key]
             else:
-                wrapper.cache[cache_key][1] -= 1
-                if wrapper.cache[cache_key][1] == 0:
-                    return wrapper.cache.pop(cache_key)
-                return wrapper.cache[cache_key]
-        wrapper.cache = dict()
+                wrapper_cache[cache_key][1] -= 1
+                if wrapper_cache[cache_key][1] == 0:
+                    return wrapper_cache.pop(cache_key)
+                return wrapper_cache[cache_key]
+
+        wrapper_cache: Dict[int, int] = dict()
         return wrapper
+
     return one_more_func
-
-
-@cache(times=2)
-def func(a, b):
-    return (a ** b) ** 2
-
-
-# print([func(i, i) for i in [1, 3, 1, 3, 1, 3, 1, 3, 1, 3]])
-for i in [1, 3, 1, 3, 1, 3]:
-    func(i, i)

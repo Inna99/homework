@@ -4,5 +4,5 @@
 black .
 mypy .
 flake8 .
-isort --check .
+isort .
 py.test tests
