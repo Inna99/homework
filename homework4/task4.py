@@ -25,7 +25,7 @@ def fizzbuzz(n: int) -> List[str]:
     :return: list
 
     >>> fizzbuzz(5)
-    ["1", "2", "fizz", "4", "buzz"]
+    ['1', '2', 'fizz', '4', 'buzz']
     """
     answer = []
     for i in range(1, n + 1):
