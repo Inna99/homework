@@ -19,9 +19,9 @@ count_dots_on_i("https://example.com/")
 59
 * https://docs.python.org/3/library/urllib.request.html#urllib.request.urlopen
 """
-from requests import get
+import requests
 
 
 def count_dots_on_i(url: str) -> int:
-    response = get(url)
+    response = requests.get(url)
     return response.text.count("i")
