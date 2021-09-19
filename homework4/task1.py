@@ -25,6 +25,7 @@ You will learn:
 
 
 def read_magic_number(path: str) -> bool:
+    """read magic number"""
     with open(file=path, encoding="unicode-escape", mode="r") as fi:
         num = fi.readline()
         try:
