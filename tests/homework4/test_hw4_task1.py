@@ -33,11 +33,11 @@ def test_is_number_raises():
             read_magic_number(filename)
 
 
-@pytest.mark.xfail(raises=ValueError)
-def test_is_number_xfail():
-    """Check that data is a number"""
-    with tempfile.NamedTemporaryFile() as tempf:
-        filename = tempf.name
-        tempf.write(b"dzfvbkSDVB")
-        tempf.seek(0)
-        read_magic_number(filename)
+# @pytest.mark.xfail(raises=ValueError)
+# def test_is_number_xfail():
+#     """Check that data is a number"""
+#     with tempfile.NamedTemporaryFile() as tempf:
+#         filename = tempf.name
+#         tempf.write(b"dzfvbkSDVB")
+#         tempf.seek(0)
+#         read_magic_number(filename)
