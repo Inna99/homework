@@ -25,3 +25,7 @@ import requests
 def count_dots_on_i(url: str) -> int:
     response = requests.get(url)
     return response.text.count("i")
+
+
+def ctt(url):
+    return count_dots_on_i(url)
