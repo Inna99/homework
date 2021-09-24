@@ -1,4 +1,6 @@
 example.py
+example2.py
+idiomatic_python.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -17,4 +17,4 @@ def is_armstrong(number: int) -> bool:
     """detects if a number is Armstrong number"""
     lenght = len(str(number))
     summa = sum(map(lambda x: int(x) ** lenght, list(str(number))))
-    return summa is number
+    return summa == number
