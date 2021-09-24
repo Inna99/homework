@@ -2,28 +2,14 @@ import unittest.mock
 from os import path
 from unittest.mock import patch
 
-from homework2.task1 import (
-    count_non_ascii_chars,
-    count_punctuation_chars,
-    get_longest_diverse_words,
-    get_most_common_non_ascii_char,
-    get_rarest_char,
-)
+from homework2.task1 import (count_non_ascii_chars, count_punctuation_chars,
+                             get_longest_diverse_words,
+                             get_most_common_non_ascii_char, get_rarest_char)
 
 current_dir = path.dirname(__file__)
 filename = path.join(current_dir, "test_data.txt")
 
 data = "аабббббб аабббаабаа абвб вбвба бвавбв бвабваб аб аб аб аб аб аб аб аб"
-
-
-# def test_get_longest_diverse_words():
-#     """Checking find 10 longest words consisting from largest amount of unique symbols"""
-#     assert get_longest_diverse_words(filename) == [
-#         'Gefu00e4hrdung',
-#         'Grou00dfvu00e4ter',
-#         'u00e4hnlich', 'Inzwischen', 'veru00e4ndert', 'equivalent', 'heiu00dft',
-#          'bewuu00dft', 'Kernfrage', 'Vu00e4ter']
-#     ]
 
 
 def test_function_that_opens_file_mock():
