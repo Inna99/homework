@@ -11,15 +11,20 @@ assert combinations([1, 2], [3, 4]) == [
     [2, 4],
 ]
 """
-import string
-from itertools import product
 from typing import Any, List
 
 
+def gen_comb(n):
+    i = 0
+    while i < 2 ** n:
+        yield bin(i)[2:].zfill(n)
+        i += 1
+
+
 def combinations(*args: List[Any]) -> List[List]:
-    lens_lists = [len(args[i]) for i in range(len(args))]
     list_lists = []
-    for comb in product(string.digits[: max(lens_lists)], repeat=len(args)):
+    for comb in gen_comb(len(args)):
+        print(comb)
         x = []
         try:
             for index, elem in enumerate(comb):
