@@ -20,12 +20,9 @@ def fizzbuzz(n: int) -> Generator:
     """
     Return the generator object
     """
-    tmp = 1
-    while tmp <= n:
-        if tmp % 5 == 0:
-            yield "buzz"
-        elif tmp % 3 == 0:
-            yield "fizz"
-        else:
-            yield str(tmp)
-        tmp += 1
+    return (
+        "fizz" * (not i % 3) + "buzz" * (not i % 5)
+        if not i % 5 or not i % 3
+        else str(i)
+        for i in range(1, n + 1)
+    )

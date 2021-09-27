@@ -19,14 +19,24 @@ count_dots_on_i("https://example.com/")
 59
 * https://docs.python.org/3/library/urllib.request.html#urllib.request.urlopen
 """
+import logging
+
 import requests
+from requests.exceptions import ConnectionError, ConnectTimeout, HTTPError
 
 
 def count_dots_on_i(url: str) -> int:
     """count how many letters `i` are present in the HTML by this URL"""
-    response = requests.get(url)
-    return response.text.count("i")
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text.count("i")
+    except (ConnectTimeout, ConnectionError):
+        raise ValueError(f"Unreachable {url}")
+    except HTTPError:
+        logging.error("status_code: , body: ")
+        # logging.error(f"status_code: {response.status_code}, body: {response.content}")
+    return 0
 
 
-def ctt(url):
-    return count_dots_on_i(url)
+print(count_dots_on_i("https://examp.com"))

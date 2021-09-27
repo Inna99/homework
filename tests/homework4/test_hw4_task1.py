@@ -10,7 +10,7 @@ def test_is_in_interval():
     with tempfile.NamedTemporaryFile() as tempf:
         filename = tempf.name
         tempf.write(b"2")
-        tempf.seek(0)
+        tempf.flush()
         assert str(read_magic_number(filename))
 
 
@@ -19,7 +19,7 @@ def test_is_not_in_interval():
     with tempfile.NamedTemporaryFile() as tempf:
         filename = tempf.name
         tempf.write(b"3")
-        tempf.seek(0)
+        tempf.flush()
         assert not read_magic_number(filename)
 
 
@@ -28,7 +28,7 @@ def test_is_number_raises():
     with tempfile.NamedTemporaryFile() as tempf:
         filename = tempf.name
         tempf.write(b"dzfvbkSDVB")
-        tempf.seek(0)
+        tempf.flush()
         with pytest.raises(ValueError):
             read_magic_number(filename)
 
@@ -39,5 +39,5 @@ def test_is_number_xfail():
     with tempfile.NamedTemporaryFile() as tempf:
         filename = tempf.name
         tempf.write(b"dzfvbkSDVB")
-        tempf.seek(0)
+        tempf.flush()
         read_magic_number(filename)
