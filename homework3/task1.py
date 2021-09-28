@@ -31,34 +31,40 @@ import functools
 from typing import Callable, Dict
 
 
-def cache(times=5):
+def cache(times: int = 5):
     def one_more_func(func: Callable) -> Callable:
+
         """Hash function with the parameter"""
+
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             cache_key = args + tuple(kwargs.items())
-            # print(cache_key)
             if cache_key not in wrapper_cache:
-                wrapper_cache[cache_key] = [func(), times]
-                return wrapper_cache[cache_key]
+                result = func(*args, **kwargs)
+                wrapper_cache[cache_key] = [id(func), times, result]
+                return wrapper_cache[cache_key][2]
             else:
                 wrapper_cache[cache_key][1] -= 1
-                if wrapper_cache[cache_key][1] == 0:
-                    return wrapper_cache.pop(cache_key)
-                return wrapper_cache[cache_key]
+                result = wrapper_cache[cache_key][2]
 
-        wrapper_cache: Dict[int, int] = dict()
+                if wrapper_cache[cache_key][1] == 0:
+                    wrapper_cache.pop(cache_key)
+                return result
+
+        wrapper_cache = dict()
         return wrapper
 
     return one_more_func
 
 
 @cache(times=2)
-def func():
-    print('?')
-    a, b = map(int, input().split())
-    return (a ** b) ** 2
+def func(a, b):
+    print('Вызов функции')
+    return (a + b) ** 2
 
+answer = []
+for i in [1, 2, 1, 2, 1, 2, 1, 2]:
+    answer.append(id(func(i, i)))
 
-for i in [1, 3, 1, 3, 1, 3]:
-    print('func()', func())
+print(answer)
+

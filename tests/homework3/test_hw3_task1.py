@@ -1,14 +1,14 @@
-from homework3.task1 import cache
+from homework3.task1 import cache, func
 
 
-def test_cache_func(capsys):
-    """Check that parameter is work"""
+def test_cache_func():
+    """Check that funcs are equal"""
+    reference_1 = func(1, 1)
+    reference_2 = func(1, 1)
+    assert reference_1 is reference_2
 
-    @cache(times=2)
-    def func(a, b):
-        return (a ** b) ** 2
 
-    for i in [1, 3, 1, 3, 1, 3]:
-        print(func(i, i)[0])
-    captured = capsys.readouterr()
-    assert captured.out == "?\n1\n?\n729\n1\n729\n1\n729\n"
+def test_cache_func_negativ():
+    """Check that funcs are not equal"""
+    one, two, three, four = id(func(1, 1)), id(func(1, 1)), id(func(1, 1)), id(func(1, 1))
+    assert one == four
