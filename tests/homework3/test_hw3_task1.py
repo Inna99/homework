@@ -10,5 +10,10 @@ def test_cache_func():
 
 def test_cache_func_negativ():
     """Check that funcs are not equal"""
-    one, two, three, four = id(func(1, 1)), id(func(1, 1)), id(func(1, 1)), id(func(1, 1))
+    one, two, three, four = (
+        id(func(1, 1)),
+        id(func(1, 1)),
+        id(func(1, 1)),
+        id(func(1, 1)),
+    )
     assert one == four

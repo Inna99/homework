@@ -51,7 +51,7 @@ def cache(times: int = 5):
                     wrapper_cache.pop(cache_key)
                 return result
 
-        wrapper_cache = dict()
+        wrapper_cache: dict = dict()
         return wrapper
 
     return one_more_func
@@ -59,12 +59,12 @@ def cache(times: int = 5):
 
 @cache(times=2)
 def func(a, b):
-    print('Вызов функции')
+    print("Вызов функции")
     return (a + b) ** 2
+
 
 answer = []
 for i in [1, 2, 1, 2, 1, 2, 1, 2]:
     answer.append(id(func(i, i)))
 
 print(answer)
-
