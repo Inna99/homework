@@ -51,7 +51,7 @@ def cache(times: int = 5):
                     wrapper_cache.pop(cache_key)
                 return result
 
-        wrapper_cache: dict = dict()
+        wrapper_cache: Dict = dict()
         return wrapper
 
     return one_more_func
