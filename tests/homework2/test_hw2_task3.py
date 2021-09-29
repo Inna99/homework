@@ -17,6 +17,14 @@ def test_combinations_not_same_length():
         [2, 3, 7],
         [2, 4, 7],
     ]
+    assert combinations([1, 2, 5], [3, 4], [7]) == [
+        [1, 3, 7],
+        [1, 4, 7],
+        [2, 3, 7],
+        [2, 4, 7],
+        [5, 3, 7],
+        [5, 4, 7],
+    ]
 
 
 def test_combinations_one_list():
