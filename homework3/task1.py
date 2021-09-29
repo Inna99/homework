@@ -59,12 +59,4 @@ def cache(times: int = 5):
 
 @cache(times=2)
 def func(a, b):
-    print("Вызов функции")
     return (a + b) ** 2
-
-
-answer = []
-for i in [1, 2, 1, 2, 1, 2, 1, 2]:
-    answer.append(id(func(i, i)))
-
-print(answer)
