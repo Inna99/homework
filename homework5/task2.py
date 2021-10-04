@@ -12,17 +12,18 @@ print(custom_sum.__doc__)  # 'This function can sum any objects which have __add
 print(custom_sum.__name__)  # 'custom_sum'
 print(custom_sum.__original_func)  # <function custom_sum at <some_id>>
 """
-
 import functools
 
 
 def print_result(func):
-    # Place for new decorator
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         """Function-wrapper which print result of an original function"""
         result = func(*args, **kwargs)
         print(result)
         return result
+
+    wrapper.__original_func = wrapper
 
     return wrapper
 

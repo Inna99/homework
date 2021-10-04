@@ -36,20 +36,58 @@ PEP8 соблюдать строго.
 import datetime
 
 
-if __name__ == '__main__':
-    teacher = Teacher('Daniil', 'Shadrin')
-    student = Student('Roman', 'Petrov')
+class Homework:
+    def __init__(self, text: str, deadline: datetime.timedelta):
+        self.text = text
+        self.deadline = deadline
+        self.created = datetime.datetime.now()
+
+    def is_active(self) -> bool:
+        now = datetime.datetime.now()
+        if self.created + self.deadline > now:
+            return True
+        else:
+            return False
+
+
+class Student:
+    def __init__(self, last_name: str, first_name: str):
+        self.last_name = last_name
+        self.first_name = first_name
+
+    @staticmethod
+    def do_homework(homework: Homework):
+        if homework.is_active():
+            return homework
+        else:
+            print("You are late")
+            return None
+
+
+class Teacher:
+    def __init__(self, last_name: str, first_name: str):
+        self.last_name = last_name
+        self.first_name = first_name
+
+    @staticmethod
+    def create_homework(text, days):
+        return Homework(text, datetime.timedelta(days))
+
+
+if __name__ == "__main__":
+    teacher = Teacher("Daniil", "Shadrin")
+    student = Student("Roman", "Petrov")
     teacher.last_name  # Daniil
     student.first_name  # Petrov
 
-    expired_homework = teacher.create_homework('Learn functions', 0)
+    expired_homework = teacher.create_homework("Learn functions", 0)
     expired_homework.created  # Example: 2019-05-26 16:44:30.688762
     expired_homework.deadline  # 0:00:00
     expired_homework.text  # 'Learn functions'
 
     # create function from method and use it
     create_homework_too = teacher.create_homework
-    oop_homework = create_homework_too('create 2 simple classes', 5)
+    oop_homework = create_homework_too("create 2 simple classes", 5)
     oop_homework.deadline  # 5 days, 0:00:00
 
     student.do_homework(oop_homework)
