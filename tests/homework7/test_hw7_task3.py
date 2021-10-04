@@ -10,7 +10,7 @@ def test_tic_tac_toe_checker_draw():
 def test_tic_tac_toe_checker_unfinished():
     """Check "unfinished" endpoint"""
     z = [["-", "-", "o"], ["-", "x", "o"], ["x", "o", "x"]]
-    assert tic_tac_toe_checker(z) == "unfinished"
+    assert tic_tac_toe_checker(z) == "unfinished!"
 
 
 def test_tic_tac_toe_checker_unfinished_wins():
