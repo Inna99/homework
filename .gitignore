@@ -1,7 +1,3 @@
-#db files
-homework8/example.db
-homework8/example.sqlite
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
