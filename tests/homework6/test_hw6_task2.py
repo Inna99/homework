@@ -5,7 +5,7 @@ from homework6.task2 import DeadlineError, HomeworkResult, Student, Teacher
 
 @pytest.mark.xfail(raises=TypeError)
 def test_homework_result_raises_exeption():
-    """calling an exception when creating an instance of a class"""
+    """calling an exception when creating an instance of a class  """
     good_student = Student("Lev", "Sokolov")
     HomeworkResult(good_student, "fff", "Solution")
 
