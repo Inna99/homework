@@ -51,12 +51,11 @@ class Homework:
 
 
 class Student:
-    def __init__(self, last_name: str, first_name: str):
+    def __init__(self, first_name: str, last_name: str):
         self.last_name = last_name
         self.first_name = first_name
 
-    @staticmethod
-    def do_homework(homework: Homework):
+    def do_homework(self, homework: Homework):
         if homework.is_active():
             return homework
         else:
@@ -65,7 +64,7 @@ class Student:
 
 
 class Teacher:
-    def __init__(self, last_name: str, first_name: str):
+    def __init__(self, first_name: str, last_name: str):
         self.last_name = last_name
         self.first_name = first_name
 
@@ -74,7 +73,7 @@ class Teacher:
         return Homework(text, datetime.timedelta(days))
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     teacher = Teacher("Daniil", "Shadrin")
     student = Student("Roman", "Petrov")
     teacher.last_name  # Daniil
