@@ -69,9 +69,6 @@ class Person:
 
 
 class Student(Person):
-    def __init__(self, last_name: str, first_name: str):
-        super().__init__(last_name, first_name)
-
     def do_homework(self, homework: Homework, solution: str):
         """If the task is already overdue raise exception"""
         if homework.is_active():
@@ -83,8 +80,7 @@ class Student(Person):
 class DeadlineError(Exception):
     """Spatial exception"""
 
-    def __init__(self, text):
-        self.txt = text
+    pass
 
 
 class HomeworkResult:
@@ -105,9 +101,6 @@ class Teacher(Person):
 
     homework_done: defaultdict = defaultdict(list)
 
-    def __init__(self, last_name: str, first_name: str):
-        super().__init__(last_name, first_name)
-
     @staticmethod
     def create_homework(text, days):
         """accepts the text of the homework the number of days to complete"""
@@ -121,17 +114,17 @@ class Teacher(Person):
         else:
             return False
 
-    def reset_results(self, *args):
+    def reset_results(self, homework=None):
         """if you pass an instance of Homework - deletes only
         the results of this task from homework_done, if nothing is transmitted,
         then completely reset homework_done."""
-        if isinstance(args[0], Homework):
-            self.homework_done.pop(args[0], "homework")
-        elif not args:
-            del self.homework_done
+        if isinstance(homework, Homework):
+            self.homework_done.pop(homework, "homework")
+        else:
+            self.homework_done: defaultdict = defaultdict(list)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     opp_teacher = Teacher("Daniil", "Shadrin")
     advanced_python_teacher = Teacher("Aleksandr", "Smetanin")
 
@@ -145,7 +138,7 @@ if __name__ == "__main__":
     result_2 = good_student.do_homework(docs_hw, "I have done this hw too")
     result_3 = lazy_student.do_homework(docs_hw, "done")
     try:
-        result_4 = HomeworkResult(good_student, "fff", "Solution")  # type: ignore
+        result_4 = HomeworkResult(good_student, "fff", "Solution")
     except Exception:
         print("There was an exception here")
     opp_teacher.check_homework(result_1)
@@ -159,4 +152,3 @@ if __name__ == "__main__":
     opp_teacher.check_homework(result_3)
 
     print(Teacher.homework_done[oop_hw])
-    # Teacher.reset_results()
