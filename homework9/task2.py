@@ -28,15 +28,3 @@ class Supressor:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         return exc_type is self.ex
-
-# lst = [1, 2, 3]
-#
-# with supressor(IndexError):
-#     [][2]
-#     print(lst[5])
-
-
-try:
-    [][2]
-except ex:
-    print()
