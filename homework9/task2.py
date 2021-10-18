@@ -4,7 +4,10 @@ Do it both ways: as a class and as a generator.
 >>> with supressor(IndexError):
 ...    [][2]
 """
+import logging
 from contextlib import contextmanager
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 @contextmanager
@@ -27,4 +30,13 @@ class Supressor:
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        return exc_type is self.ex
+        if not exc_type:
+            logging.info(f"The exception was not raised")
+            return True
+        elif exc_type is self.ex:
+            logging.info(f"Exception {exc_type} has been handled")
+            return True
+
+
+if __name__ == "__main__":  # pragma: no cover
+    pass

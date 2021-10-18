@@ -22,15 +22,12 @@ def universal_file_counter(
             with open(fl, "r") as f:
                 count += f.read().count("\n")
     else:
-        """здесь такая реализация, так как не очень ясно почему передайм в функцию не split или 'split', а str.split
-        А если я захочу передать туда кастомную функцию tokenize(text: str) -> int:
-        """
         for fl in files:
             with open(fl, "r") as f:
-                count += len((f.read()).split())
+                count += len(tokenizer((f.read())))
     return count
 
 
-if __name__ == "__main__":
-    cur_dir = Path()
+if __name__ == "__main__":  # pragma: no cover
+    cur_dir = Path().cwd()
     print(universal_file_counter(cur_dir, "txt", str.split))
