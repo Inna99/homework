@@ -17,13 +17,6 @@ def test_supressor_raised():
             [][2]
 
 
-def test_supressor_not_error():
-    """checks that it work without error"""
-    lst = [1, 2]
-    with Supressor(IndexError):
-        lst[1]
-
-
 def test_Supressor_suppressed():
     """checks that the intended error is suppressed"""
     lst = [1, 2]
@@ -36,10 +29,3 @@ def test_Supressor_raised():
     with pytest.raises(IndexError):
         with Supressor(RuntimeError):
             [][2]
-
-
-def test_Supressor_not_error():
-    """checks that it work without error"""
-    lst = [1, 2]
-    with Supressor(IndexError):
-        lst[1]
