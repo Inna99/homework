@@ -16,7 +16,7 @@ def universal_file_counter(
     dir_path: Path, file_extension: str, tokenizer: Optional[Callable] = None
 ) -> int:
     count = 0
-    files = dir_path.cwd().glob("*." + file_extension)
+    files = dir_path.glob("*." + file_extension)
     if tokenizer is None:
         for fl in files:
             with open(fl, "r") as f:
@@ -28,6 +28,6 @@ def universal_file_counter(
     return count
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     cur_dir = Path()
     print(universal_file_counter(cur_dir, "txt", str.split))
