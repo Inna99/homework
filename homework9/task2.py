@@ -1,7 +1,7 @@
 """
 Write a context manager, that suppresses passed exception.
 Do it both ways: as a class and as a generator.
->>> with supressor(IndexError):
+>>> with suppressor(IndexError):
 ...    [][2]
 """
 import logging
@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 @contextmanager
-def supressor(*args, **kwargs):
+def suppressor(*args, **kwargs):
     """Custom generator context manager that suppresses passed exception"""
     ex = args[0]
     try:
@@ -20,11 +20,11 @@ def supressor(*args, **kwargs):
         pass
 
 
-class Supressor:
+class Suppressor:
     """Custom class context manager that suppresses passed exception"""
 
-    def __init__(self, exeption):
-        self.ex = exeption
+    def __init__(self, exception):
+        self.ex = exception
 
     def __enter__(self):
         pass

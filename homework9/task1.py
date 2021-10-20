@@ -31,10 +31,10 @@ def merge_sorted_files(file_list: list) -> Iterator:
             el2 = next(it2, None)
             while el1 is not None or el2 is not None:
                 if el1 is None or (el2 is not None and el2 < el1):
-                    yield el2.rstrip()  # type: ignore
+                    yield int(el2.rstrip())  # type: ignore
                     el2 = next(it2, None)
                 else:
-                    yield el1.rstrip()
+                    yield int(el1.rstrip())
                     el1 = next(it1, None)
 
 
