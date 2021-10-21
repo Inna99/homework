@@ -8,16 +8,15 @@ import sqlite3
 
 
 class TableData(dict):
-    def __init__(self, db_name, table):
+    def __init__(self, database_name, table_name):
         super().__init__()
-        conn = sqlite3.connect(db_name)
+        conn = sqlite3.connect(database_name)
         cursor = conn.cursor()
-        cursor.execute('SELECT * from ' + table)
+        cursor.execute('SELECT * from ' + table_name)
         data = cursor.fetchall()  # will be a list with data.
-        print(data)
         for line in data:
             president, value, country = line
-            self.__setattr__(president, [value, country])
+            self.__setattr__(president, [president, value, country])
 
     def __getattr__(self, attr):
         return self[attr]
@@ -27,5 +26,10 @@ class TableData(dict):
 
 
 if __name__ == '__main__':  # pragma: no cover
-    storage = TableData('example.sqlite', 'presidents')
-    print(storage['Yeltsin'])
+    presidents = TableData(database_name='example.sqlite', table_name='presidents')
+    print(presidents)
+    # print(presidents['Yeltsin'])
+    # print(len(presidents))
+    # print('Yeltsin' in presidents)
+    # for president in presidents:
+    #     print(president['name'])
