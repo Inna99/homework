@@ -4,10 +4,13 @@ class KeyValueStorage(dict):
         with open(path_to_file, 'r') as f:
             for line in f. readlines():
                 key, value = line.rstrip().split('=')
-                if value.isdigit():
-                    self.__setattr__(key, int(value))
+                if key in self:
+                    raise ValueError("attribute already exists")
                 else:
-                    self.__setattr__(key, value)
+                    if value.isdigit():
+                        self.__setattr__(key, int(value))
+                    else:
+                        self.__setattr__(key, value)
 
     def __getattr__(self, attr):
         return self[attr]
