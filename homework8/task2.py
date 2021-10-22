@@ -19,12 +19,12 @@ class TableData(dict):
         self[key] = value
 
 
-if __name__ == '__main__':  # pragma: no cover
-    presidents = TableData(database_name='example.sqlite', table_name='presidents')
+if __name__ == "__main__":  # pragma: no cover
+    presidents = TableData(database_name="example.sqlite", table_name="presidents")
     print(presidents)
-    print(presidents['Yeltsin'])
+    print(presidents["Yeltsin"])
     print(len(presidents))
-    print('Yeltsin' in presidents)
+    print("Yeltsin" in presidents)
     for president in presidents:
         print(president)
 

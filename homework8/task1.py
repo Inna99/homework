@@ -1,9 +1,9 @@
 class KeyValueStorage(dict):
     def __init__(self, path_to_file):
         super().__init__()
-        with open(path_to_file, 'r') as f:
-            for line in f. readlines():
-                key, value = line.rstrip().split('=')
+        with open(path_to_file, "r") as f:
+            for line in f.readlines():
+                key, value = line.rstrip().split("=")
                 if key in self:
                     raise ValueError("attribute already exists")
                 else:
@@ -19,9 +19,9 @@ class KeyValueStorage(dict):
         self[key] = value
 
 
-if __name__ == '__main__':  # pragma: no cover
-    storage = KeyValueStorage('task1.txt')
+if __name__ == "__main__":  # pragma: no cover
+    storage = KeyValueStorage("task1.txt")
     print(storage)
-    print(storage['1'])
+    print(storage["1"])
     print(storage.song)
     print(storage.power)
