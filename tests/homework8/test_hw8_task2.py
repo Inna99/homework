@@ -22,3 +22,4 @@
 # def test_table_data_is_operator():
 #     """checking "is" operator support"""
 #     assert 'Yeltsin' in presidents
+#     assert
