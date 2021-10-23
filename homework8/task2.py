@@ -1,37 +1,62 @@
 import sqlite3
+from os import path
 
 
-class TableData(dict):
+class TableData:
     def __init__(self, database_name, table_name):
-        super().__init__()
-        conn = sqlite3.connect(database_name)
+        self.database_name = database_name
+        self.table_name = table_name
+
+    def __len__(self):
+        conn = sqlite3.connect(self.database_name)
         cursor = conn.cursor()
-        cursor.execute(f"SELECT * from {table_name}")
-        for line in cursor.fetchall():
-            president, value, country = line
-            self.__setattr__(president, [president, value, country])
+        cursor.execute(f"SELECT * from {self.table_name}")
+        data = cursor.fetchall()
+        conn.close()
+        return len(data)
+
+    def __getitem__(self, item):
+        if not isinstance(item, str):
+            raise TypeError
+        else:
+            conn = sqlite3.connect(self.database_name)
+            cursor = conn.cursor()
+            cursor.execute(
+                f"SELECT * from {self.table_name} where name=:name", {"name": item}
+            )
+            data = cursor.fetchall()
+            conn.close()
+            if bool(data):
+                return data
+            else:
+                raise KeyError
+
+    def __iter__(self):
+        conn = sqlite3.connect(self.database_name)
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT * from {self.table_name}")
+        yield cursor.fetchall()
         conn.close()
 
-    def __getattr__(self, attr):
-        return self[attr]
-
-    def __setattr__(self, key, value):
-        self[key] = value
+    def __contains__(self, item):
+        conn = sqlite3.connect(self.database_name)
+        cursor = conn.cursor()
+        cursor.execute(
+            f"SELECT * from {self.table_name} where name=:name", {"name": item}
+        )
+        data = cursor.fetchall()
+        conn.close()
+        return bool(data)
 
 
 if __name__ == "__main__":  # pragma: no cover
-    presidents = TableData(database_name="example.sqlite", table_name="presidents")
-    print(presidents)
+    filename = path.join(path.dirname(__file__), "example.sqlite")
+    presidents = TableData(database_name=filename, table_name="presidents")
     print(presidents["Yeltsin"])
+    print(presidents["Popov"])
+    print(presidents[5])
+
     print(len(presidents))
     print("Yeltsin" in presidents)
     for president in presidents:
         print(president)
-
-# import sqlite3
-# conn = sqlite3.connect('example_test.sqlite')
-# cursor = conn.cursor()
-# presidents = "presidents"
-# cursor.execute(f"SELECT * from {presidents}")
-# data = cursor.fetchall()  # will get all records with this name. You can also use .fetchone() to get one record.
-# print(data)
