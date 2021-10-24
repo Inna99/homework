@@ -34,10 +34,9 @@ def count_dots_on_i(url: str) -> int:
     except (ConnectTimeout, ConnectionError):
         raise ValueError(f"Unreachable {url}")
     except HTTPError:
-        logging.error("status_code: , body: ")
-        # logging.error(f"status_code: {response.status_code}, body: {response.content}")
+        logging.error(f"status_code: {response.status_code}, body: {response.content}")  # type: ignore
     return 0
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     print(count_dots_on_i("https://examp.com"))
