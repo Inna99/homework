@@ -1,5 +1,6 @@
 import logging
-from unittest import mock
+from unittest import mock, TestCase
+from unittest.mock import MagicMock, patch
 
 import pytest
 import requests
@@ -26,44 +27,20 @@ url = "https://example.com/"
 #
 # можно даже последний разделить что бы проверить точно ли ConnectTimeout ловит оба эксепшена и написать два теста один где сайдэффект райзит таймаут а другой где райзит коннекшн эррор
 
+
+class MockResponse(TestCase):
+    def __init__(self, status_code):
+        super().__init__()
+        self.status_code = status_code
+        self.text = 'font-family: Arial, Helvetica, sans-serif;'
+
+    def raise_for_status(self):
+        if self.status_code not in range(200, 300):
+            raise HTTPError
+
+
+# мокаем requests.get на ретурн вэлью MockResponse 200 и какаято строчка и проверяем что правильно посчиталось
 def test_count_dots_on_i():
-    with mock.patch('homework4.task2.count_dots_on_i') as mock_object:
-        mock_object.return_value = 10
-        from homework4.task2 import count_dots_on_i
-        print(count_dots_on_i("https://example.com/"))
-        assert count_dots_on_i("https://example.com/") == 10
-
-
-# def test_logging(caplog):
-#     """Check that logging work when HTTPError error raise"""
-#     response = requests.get(url)
-#     response.raise_for_status()
-#     logging.getLogger().info("boo %s", "arg")
-#
-#     assert caplog.record_tuples == [("root", logging.INFO, "boo arg")]
-#     # assert captured.startswith("status_code")
-
-
-# from homework4.task2 import count_dots_on_i
-#
-#
-# def test_count_dots_on_i_return_value():
-#     with mock.patch("homework4.task2.count_dots_on_i") as mock_object:
-#         mock_object.return_value = 10
-#         assert count_dots_on_i("https://example.com/") == 10
-
-
-# def test_count_dots_on_i():
-#     with mock.patch('homework4.task2.count_dots_on_i') as mock_object:
-#         mock_object.return_value = 10
-#         from homework4.task2 import count_dots_on_i
-#         print(count_dots_on_i("https://example.com/"))
-#         assert count_dots_on_i("https://example.com/") == 10
-
-
-# def test_count_dots_on_i_side_effect():
-#     """Checks when the url does not exist"""
-#     with mock.patch("homework4.task2.count_dots_on_i") as mock_object:
-#         mock_object.side_effect = Exception
-#         with pytest.raises(Exception):
-#             count_dots_on_i("https://example.com/")
+    with patch.object(count_dots_on_i, 'requests.get') as mock_method:
+        # mock_method.return_value = MockResponse(200)
+        mock_method.return_value = 5
