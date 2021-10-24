@@ -39,5 +39,5 @@ def count_dots_on_i(url: str) -> int:
     return 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(count_dots_on_i("https://examp.com"))
