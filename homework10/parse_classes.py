@@ -108,5 +108,5 @@ class ParsingCompanyPage:
             p_e_ratio = float(re.sub("[\r\n]", "", d0).split()[0].replace(",", ""))
             return p_e_ratio
         except AttributeError:
-            logging.info("no info about company")
+            logging.info("no info about company ")
             return 0
