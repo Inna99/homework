@@ -1,5 +1,5 @@
-import unittest.mock
 from os import path
+import unittest.mock
 from unittest.mock import patch
 
 from homework2.task1 import (
