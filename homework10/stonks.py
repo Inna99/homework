@@ -91,9 +91,8 @@ def save_the_final_information():
         json.dump(a[:10], fp)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     all_information_companies: defaultdict = defaultdict(dict)
     parse_business_insider()
-    print(f"{len(all_information_companies)}, {all_information_companies}")
     save_the_final_information()
     # print(f"{len(all_information_companies)}, {all_information_companies}")
