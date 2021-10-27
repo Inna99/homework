@@ -92,8 +92,8 @@ class ParsingCompanyPage:
         what_profit_buy = prev_close - week_low
         what_profit_sale = week_high - prev_close
         logging.debug(f"{what_profit_buy}, {what_profit_sale}")
-        percent_sale_from_high = ((100 * what_profit_sale) / week_high)
-        percent_buy_from_low = ((100 * what_profit_buy) / week_low)
+        percent_sale_from_high = (100 * what_profit_sale) / week_high
+        percent_buy_from_low = (100 * what_profit_buy) / week_low
         logging.debug(
             f"percent_sale_from_high={percent_sale_from_high}, percent_buy_from_low={percent_buy_from_low}"
         )
