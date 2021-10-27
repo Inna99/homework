@@ -66,14 +66,14 @@ class ParsingCompanyPage:
         """what profit would the company's shares bring
         Высчитать какую прибыль принесли бы акции компании (в процентах),
         если бы они были куплены на уровне 52 Week Low и проданы на уровне 52 Week High"""
+        current_tag = self.soup.find_all("div", {"class": "snapshot__highlow"})
+        if len(current_tag) == 0:
+            return 0, 0
+
         try:
-            current_tag = self.soup.find_all("div", {"class": "snapshot__highlow"})[
-                1
-            ].text.split()
+            current_tag = current_tag[1].text.split()
         except IndexError:
-            current_tag = self.soup.find_all("div", {"class": "snapshot__highlow"})[
-                0
-            ].text.split()
+            current_tag = current_tag[0].text.split()
         except TypeError as ex:
             logging.info(f"no week_low and week_high, with {ex}")
             return 0, 0
@@ -92,8 +92,8 @@ class ParsingCompanyPage:
         what_profit_buy = prev_close - week_low
         what_profit_sale = week_high - prev_close
         logging.debug(f"{what_profit_buy}, {what_profit_sale}")
-        percent_sale_from_high = format(((100 * what_profit_sale) / week_high), ".10g")
-        percent_buy_from_low = format(((100 * what_profit_buy) / week_low), ".10g")
+        percent_sale_from_high = ((100 * what_profit_sale) / week_high)
+        percent_buy_from_low = ((100 * what_profit_buy) / week_low)
         logging.debug(
             f"percent_sale_from_high={percent_sale_from_high}, percent_buy_from_low={percent_buy_from_low}"
         )

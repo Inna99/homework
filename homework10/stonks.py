@@ -6,7 +6,7 @@ from multiprocessing import Pool
 
 from parse_classes import ParsingCompanyPage, ParsingMainPage
 
-logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.DEBUG)
 
 
 def get_all_main_links():
@@ -94,5 +94,6 @@ def save_the_final_information():
 if __name__ == "__main__":
     all_information_companies: defaultdict = defaultdict(dict)
     parse_business_insider()
-    save_the_final_information()
     print(f"{len(all_information_companies)}, {all_information_companies}")
+    save_the_final_information()
+    # print(f"{len(all_information_companies)}, {all_information_companies}")
