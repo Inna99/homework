@@ -14,7 +14,7 @@ def parse_valute():
     webFile.close()
 
 
-def get_valute(val='USD'):
+def get_valute(val="USD"):
     parse_valute()
     doc = minidom.parse("XML_daily.xml")
     valute_array = doc.getElementsByTagName("Valute")
