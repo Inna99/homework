@@ -3,6 +3,9 @@ import logging
 from collections import defaultdict
 from itertools import chain
 from multiprocessing import Pool
+import requests
+from bs4 import BeautifulSoup  # type: ignore
+
 
 from parse_classes import ParsingCompanyPage, ParsingMainPage
 
@@ -27,18 +30,8 @@ def get_all_comp_links(d):
 
 def make_all_comp(tmp):
     name, company_url = tmp
-    parsing_company_page = ParsingCompanyPage(company_url)
-    percent_sale_from_high, percent_buy_from_low = parsing_company_page.get_profit()
-    company_code = parsing_company_page.get_company_code()
-    p_e_ratio = parsing_company_page.get_p_e_ratio()
-    return {
-        name: {
-            "p_e_ratio": p_e_ratio,
-            "company_code": company_code,
-            "percent_sale_from_high": percent_sale_from_high,
-            "percent_buy_from_low": percent_buy_from_low,
-        }
-    }
+    parsing_company_page = ParsingCompanyPage(company_url, name)
+    return parsing_company_page.info_about_company()
 
 
 def parse_business_insider():
@@ -50,12 +43,14 @@ def parse_business_insider():
         x = p.map(make_all_on_main, all_links)
     for i in x:
         first_part_dict.update(i)
-
+    print(first_part_dict)
     all_links_comp = get_all_comp_links(first_part_dict)
     with Pool(32) as p:
         y = p.map(make_all_comp, all_links_comp)
+
     for i in y:
         second_part_dict.update(i)
+    print(second_part_dict)
 
     for k, v in chain(first_part_dict.items(), second_part_dict.items()):
         all_information_companies[k].update(v)
@@ -93,6 +88,30 @@ def save_the_final_information():
 
 if __name__ == "__main__":  # pragma: no cover
     all_information_companies: defaultdict = defaultdict(dict)
-    parse_business_insider()
-    save_the_final_information()
+    # parse_business_insider()
+    # save_the_final_information()
     # print(f"{len(all_information_companies)}, {all_information_companies}")
+
+    # all_information_companies: defaultdict = defaultdict(dict)
+    #
+    # for i in range(1, 12):
+    #     main_url = f'https://markets.businessinsider.com/index/components/s&p_500?p={i}'
+    #     parsing_main_paige = ParsingMainPage(main_url)
+    #     all_information_companies.update(parsing_main_paige.get_growth_decline_and_current_value())
+    # logging.debug(f'{len(all_information_companies)}, {all_information_companies}')
+    # for name, values in all_information_companies.items():
+    #     company_url = values['company_url']
+    #     parsing_company_page = ParsingCompanyPage(company_url, name)
+    #     tmp = parsing_company_page.info_about_company()
+    #     all_information_companies.update(tmp)
+    #
+    # logging.debug(f'{len(all_information_companies)}, {all_information_companies}')
+
+    main_url = f'https://markets.businessinsider.com/index/components/s&p_500?p={1}'
+    request = requests.get(main_url)
+    html_doc = request.text
+    soup = BeautifulSoup(html_doc, "html.parser")
+
+    # tag = soup.find("a", {"title": 'Abbott Laboratories'})
+    parsing_main_paige = ParsingMainPage(main_url)
+    print(parsing_main_paige.get_url_company('Abbott Laboratories') == 'https://markets.businessinsider.com/stocks/abt-stock')
