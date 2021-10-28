@@ -6,16 +6,27 @@ from unittest.mock import patch
 """
 но так вабще я бы сделал функции парсинга на каждый нод. которые на входе html на выходе значение.
 и отдавал б им результаты find нужного и собственно для теста 1 результат этого файнда замокать .
-ну там написатьhtml сконвертить в bs4 и передать. как то так
+ну там написать html сконвертить в bs4 и передать. как то так
 """
+from unittest import TestCase
+from pathlib import Path
+
+
 main_url = f'https://markets.businessinsider.com/index/components/s&p_500?p={1}'
 request = requests.get(main_url)
 html_doc = request.text
 soup = BeautifulSoup(html_doc, "html.parser")
 
 
-current_dir = path.dirname(__file__)
-filename = path.join(current_dir, "main_for_test.html")
+class MockResponse(TestCase):
+    def __init__(self, file):
+        super().__init__()
+        with open(file, 'r') as f:
+            self.text = f.read()
+
+
+cur_dir = Path("main_for_test.html")
+print(cur_dir)
 
 
 def test_get_url_company_external_resource():
@@ -27,12 +38,13 @@ def test_get_url_company_external_resource():
 
 
 def test_get_url_company_saved_html():
-    with patch.object(ParsingMainPage.get_url_company, 'BeautifulSoup', return_value=None) as mock_method:
-        thing = ProductionClass()
-        thing.method(1, 2, 3)
     """returns address using saved html"""
-    parsing_main_paige = ParsingMainPage(main_url)
-    assert parsing_main_paige.get_url_company('Abbott Laboratories') == 'https://markets.businessinsider.com/stocks/abt-stock'
+    with patch.object(requests, "get") as mock_method:
+
+        mock_method.return_value = MockResponse(cur_dir)
+        parsing_main_paige = ParsingMainPage(main_url)
+        print(parsing_main_paige)
+        assert parsing_main_paige.get_url_company('Abbott Laboratories') == 'https://markets.businessinsider.com/stocks/abt-stock'
 
 
 def test_get_url_company_mock_html():
