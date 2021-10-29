@@ -42,7 +42,7 @@ class Order:
         return result
 
     def __repr__(self):
-        return f'{self.price=}, {self.final_price()=}, strategy={self.strategy}'
+        return f"{self.price=}, {self.final_price()=}, strategy={self.strategy}"
 
 
 class Strategy(ABC):

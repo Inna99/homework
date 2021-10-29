@@ -22,12 +22,11 @@ assert order_2.final_price() == 10
 
 from homework11.strategy import *
 
-
-if __name__ == '__main__':  # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
     orders = [
         Order(100, NoDiscount()),
-        Order(100, BasicDiscount(.20)),
-        Order(100, DayDiscount([i for i in range(0, 32)], .20))
+        Order(100, BasicDiscount(0.20)),
+        Order(100, DayDiscount([i for i in range(0, 32)], 0.20)),
     ]
     for order in orders:
         print(order)
