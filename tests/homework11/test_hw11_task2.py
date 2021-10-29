@@ -1,4 +1,4 @@
-from homework11.task2 import *
+from homework11.strategy import NoDiscount, BasicDiscount, DayDiscount, Order
 
 
 def test_orders():

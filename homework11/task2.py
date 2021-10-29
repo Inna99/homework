@@ -20,7 +20,7 @@ order_2 = Order(100, elder_discount)
 assert order_2.final_price() == 10
 """
 
-from homework11.strategy import *
+from homework11.strategy import NoDiscount, BasicDiscount, DayDiscount, Order
 
 if __name__ == "__main__":  # pragma: no cover
     orders = [
