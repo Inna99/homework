@@ -21,12 +21,10 @@ def test_table_data_len():
 def test_table_data_is_collections():
     """checking that the object implements the iteration protocol"""
     assert [president for president in presidents] == [
-        [
             ("Yeltsin", 999, "Russia"),
             ("Trump", 1337, "US"),
             ("Big Man Tyrone", 101, "Kekistan"),
         ]
-    ]
 
 
 def test_table_data_is_operator():

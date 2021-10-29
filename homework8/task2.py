@@ -10,10 +10,10 @@ class TableData:
     def __len__(self):
         conn = sqlite3.connect(self.database_name)
         cursor = conn.cursor()
-        cursor.execute(f"SELECT * from {self.table_name}")
-        data = cursor.fetchall()
+        cursor.execute(f"SELECT COUNT(*) from {self.table_name}")
+        data = cursor.fetchone()
         conn.close()
-        return len(data)
+        return data[0]
 
     def __getitem__(self, item):
         if not isinstance(item, str):
@@ -35,8 +35,8 @@ class TableData:
         conn = sqlite3.connect(self.database_name)
         cursor = conn.cursor()
         cursor.execute(f"SELECT * from {self.table_name}")
-        yield cursor.fetchall()
-        conn.close()
+        length = self.__len__()
+        return (cursor.fetchone() for _ in range(length))
 
     def __contains__(self, item):
         conn = sqlite3.connect(self.database_name)
@@ -44,7 +44,7 @@ class TableData:
         cursor.execute(
             f"SELECT * from {self.table_name} where name=:name", {"name": item}
         )
-        data = cursor.fetchall()
+        data = cursor.fetchone()
         conn.close()
         return bool(data)
 
@@ -53,9 +53,6 @@ if __name__ == "__main__":  # pragma: no cover
     filename = path.join(path.dirname(__file__), "example.sqlite")
     presidents = TableData(database_name=filename, table_name="presidents")
     print(presidents["Yeltsin"])
-    print(presidents["Popov"])
-    print(presidents[5])
-
     print(len(presidents))
     print("Yeltsin" in presidents)
     for president in presidents:
