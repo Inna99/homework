@@ -4,7 +4,6 @@ import re
 import requests
 from bs4 import BeautifulSoup  # type: ignore
 
-
 from homework10 import cbr  # type: ignore
 
 
@@ -21,7 +20,6 @@ class ParsingMainPage:
         """
         name_dict = {}
         current_tag = self.soup.find("tbody", {"class": "table__tbody"})
-        # company_name, growth_decline, current_value = (0, 0, 0)
         curse_usd = float((cbr.get_valute()).replace(",", ""))
 
         for k, i in enumerate(current_tag.childGenerator(), 0):
@@ -34,7 +32,7 @@ class ParsingMainPage:
                 logging.debug(f"{growth_decline}, {current_value}, {company_name}")
                 current_value_rub = curse_usd * current_value
                 url_company = self.get_url_company(company_name)
-                if 'stocks' in url_company:
+                if "stocks" in url_company:
                     name_dict.update(
                         {
                             company_name: {
@@ -62,16 +60,24 @@ class ParsingCompanyPage:
 
     def get_company_code(self):
         """Код компании (справа от названия компании на странице компании)"""
-        company_code = self.soup.find("main").find('span', {'class': 'price-section__category'}).find('span').text.split()[1]
+        company_code = (
+            self.soup.find("main")
+            .find("span", {"class": "price-section__category"})
+            .find("span")
+            .text.split()[1]
+        )
         logging.debug(company_code)
         return company_code
 
     def week_low_high(self):
         """52 Week Low and 52 Week High"""
-        current_tag = self.soup.find('main').find('div', {'class': 'snapshot__highlow-container'}).find_all('div', {'class': 'snapshot__highlow'})
+        current_tag = self.soup.find("main").find(
+            "div", {"class": "snapshot__highlow-container"}
+        )
         if current_tag is not None:
+            current_tag = current_tag.find_all("div", {"class": "snapshot__highlow"})
             tag = current_tag[0].text.split()
-            if 'Week' not in current_tag:
+            if "Week" not in current_tag:
                 try:
                     tag = current_tag[1].text.split()
                 except IndexError:
@@ -84,7 +90,9 @@ class ParsingCompanyPage:
 
     def previous_closure(self):
         """cost at the time of the previous closing"""
-        current_tag = self.soup.find('div', {'class': 'snapshot'}).find('div').text.split()[0]
+        current_tag = (
+            self.soup.find("div", {"class": "snapshot"}).find("div").text.split()[0]
+        )
         prev_close = float(current_tag.replace(",", ""))
         return prev_close
 
@@ -111,9 +119,13 @@ class ParsingCompanyPage:
     def get_p_e_ratio(self):
         """P/E компании (информация находится справа от графика на странице компании)"""
         try:
-            current_tag = self.soup.find('main').find_all('div', {'class': 'snapshot__data-item'})[6].text.split()[0]
+            current_tag = (
+                self.soup.find("main")
+                .find_all("div", {"class": "snapshot__data-item"})[6]
+                .text.split()[0]
+            )
             p_e_ratio = float(current_tag.replace(",", ""))
-            logging.debug(f'p_e_ratio={p_e_ratio}')
+            logging.debug(f"p_e_ratio={p_e_ratio}")
             return p_e_ratio
         except AttributeError:
             logging.info("no info about company ")
@@ -123,11 +135,11 @@ class ParsingCompanyPage:
         """collects all the information from the company's page and returns the dictionary"""
         percent_sale_from_high, percent_buy_from_low = self.get_profit()
         comp_dict = {
-                self.name: {
-                    "p_e_ratio": self.get_p_e_ratio(),
-                    "company_code": self.get_company_code(),
-                    "percent_sale_from_high": percent_sale_from_high,
-                    "percent_buy_from_low": percent_buy_from_low,
-                }
+            self.name: {
+                "p_e_ratio": self.get_p_e_ratio(),
+                "company_code": self.get_company_code(),
+                "percent_sale_from_high": percent_sale_from_high,
+                "percent_buy_from_low": percent_buy_from_low,
             }
+        }
         return comp_dict

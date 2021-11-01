@@ -1,14 +1,12 @@
 import json
-from pathlib import Path
 import logging
 from collections import defaultdict
 from itertools import chain
 from multiprocessing import Pool
-import requests
+
 from bs4 import BeautifulSoup  # type: ignore
 
-
-from parse_classes import ParsingCompanyPage, ParsingMainPage
+from .parse_classes import ParsingCompanyPage, ParsingMainPage
 
 # logging.basicConfig(level=logging.DEBUG)
 
@@ -89,33 +87,6 @@ def save_the_final_information():
 
 if __name__ == "__main__":  # pragma: no cover
     all_information_companies: defaultdict = defaultdict(dict)
-    # parse_business_insider()
-    # save_the_final_information()
-    # print(f"{len(all_information_companies)}, {all_information_companies}")
-
-    # all_information_companies: defaultdict = defaultdict(dict)
-    #
-    # for i in range(1, 12):
-    #     main_url = f'https://markets.businessinsider.com/index/components/s&p_500?p={i}'
-    #     parsing_main_paige = ParsingMainPage(main_url)
-    #     all_information_companies.update(parsing_main_paige.get_growth_decline_and_current_value())
-    # logging.debug(f'{len(all_information_companies)}, {all_information_companies}')
-    # for name, values in all_information_companies.items():
-    #     company_url = values['company_url']
-    #     parsing_company_page = ParsingCompanyPage(company_url, name)
-    #     tmp = parsing_company_page.info_about_company()
-    #     all_information_companies.update(tmp)
-    #
-    # logging.debug(f'{len(all_information_companies)}, {all_information_companies}')
-
-    # main_url = f'https://markets.businessinsider.com/index/components/s&p_500?p={1}'
-    # request = requests.get(main_url)
-    # html_doc = request.text
-    # soup = BeautifulSoup(html_doc, "html.parser")
-    #
-    # # tag = soup.find("a", {"title": 'Abbott Laboratories'})
-    # parsing_main_paige = ParsingMainPage(main_url)
-    # print(parsing_main_paige.get_url_company('Abbott Laboratories') == 'https://markets.businessinsider.com/stocks/abt-stock')
-
-    cur_dir = Path("main_for_test.html")
-    print(cur_dir)
+    parse_business_insider()
+    save_the_final_information()
+    logging.debug(f"{len(all_information_companies)}, {all_information_companies}")
