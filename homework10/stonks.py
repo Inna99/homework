@@ -4,8 +4,6 @@ from collections import defaultdict
 from itertools import chain
 from multiprocessing import Pool
 
-from bs4 import BeautifulSoup  # type: ignore
-
 from .parse_classes import ParsingCompanyPage, ParsingMainPage
 
 # logging.basicConfig(level=logging.DEBUG)
