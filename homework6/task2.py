@@ -138,7 +138,7 @@ if __name__ == "__main__":  # pragma: no cover
     result_2 = good_student.do_homework(docs_hw, "I have done this hw too")
     result_3 = lazy_student.do_homework(docs_hw, "done")
     try:
-        result_4 = HomeworkResult(good_student, "fff", "Solution")
+        result_4 = HomeworkResult(good_student, "fff", "Solution")  # type: ignore
     except Exception:
         print("There was an exception here")
     opp_teacher.check_homework(result_1)
