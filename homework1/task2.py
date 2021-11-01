@@ -23,7 +23,6 @@ def check_fibonacci(data: Sequence[int]) -> bool:
             a, b = b, a + b
             if data[i] != b:
                 return False
-                break
         return True
     else:
         return False
