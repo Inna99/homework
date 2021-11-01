@@ -4,7 +4,7 @@ from collections import defaultdict
 from itertools import chain
 from multiprocessing import Pool
 
-from .parse_classes import ParsingCompanyPage, ParsingMainPage
+from homework10.parse_classes import ParsingCompanyPage, ParsingMainPage
 
 # logging.basicConfig(level=logging.DEBUG)
 
